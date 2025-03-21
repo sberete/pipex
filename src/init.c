@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sxrimu <sxrimu@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/21 20:00:44 by sxrimu            #+#    #+#             */
+/*   Updated: 2025/03/21 20:45:37 by sxrimu           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "pipex.h"
 
 void	pipe_init(char **argv, char **env)
@@ -6,8 +18,7 @@ void	pipe_init(char **argv, char **env)
 	char	*tmp;
 	int		i;
 	char	**split_arg;
-	int		x;
-
+	int x;
 	tmp = NULL;
 	if (!argv[2][0] || !argv[3][0])
 		exit(1);
@@ -22,22 +33,20 @@ void	pipe_init(char **argv, char **env)
 		i++;
 	}
 	path = ft_split(tmp + 5, ':');
+	split_arg = ft_split(argv[2], ' ');
 	i = 0;
-    printf("%s\n", path[0]);
-	split_arg = ft_split_path(argv[2], ' ');
-    tmp = ft_strjoin(path[0], split_arg[0]);
-    ft_printf("%s\n", tmp);
 	while (path[i])
 	{
+		tmp = ft_strjoin(path[i], split_arg[0]);
 		if ((x = access(tmp, F_OK)) == 0 && X_OK != -1)
 		{
 			ft_printf("La commande existe\n");
 			break ;
 		}
-		ft_printf("%d\n", x);
+		ft_printf("Pour : %s, access vaut : %d\n", tmp, x);
 		i++;
 	}
-}
+} 
 
-//strace -e access
+//strace -e acddddcess
 //strace
