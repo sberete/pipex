@@ -6,6 +6,8 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+#include <sys/stat.h>
+#include <fcntl.h>
 #include <stdio.h>
 
 #define F_OK 0
@@ -13,6 +15,6 @@
 // #define W_OK 3
 #define R_OK 4
 
-void	pipe_init(char **argv, char **env);
+void	pipe_parce(char **argv, char **env);
 
 #endif
