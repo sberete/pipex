@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sxrimu <sxrimu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sberete <sberete@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 18:07:38 by sberete           #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2025/04/02 13:37:47 by sxrimu           ###   ########.fr       */
+=======
+/*   Updated: 2025/03/22 00:24:57 by sberete          ###   ########.fr       */
+>>>>>>> 88b3781224d77094250275f3ff5ccf771b41c143
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +24,14 @@ char *ft_strjoin(char const *s1, char const *s2)
     if (!s1 || !s2)
         return (NULL);
     if (s1[ft_strlen(s1) - 1] != '/')
-        j = ft_strlen(s1) + 1 + ft_strlen(s2);  // +1 pour le '/'
+        j = ft_strlen(s1) + 1 + ft_strlen(s2);
     else
         j = ft_strlen(s1) + ft_strlen(s2);
+<<<<<<< HEAD
     str = malloc(sizeof(char) * (j + 1));  // +1 pour le caractère '\0'
+=======
+    str = malloc(sizeof(char) * (j + 1));
+>>>>>>> 88b3781224d77094250275f3ff5ccf771b41c143
     if (!str)
         return (NULL);
     i = 0;
