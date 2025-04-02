@@ -6,7 +6,9 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+#include <sys/stat.h>
 #include <stdio.h>
+#include <fcntl.h>
 
 #define F_OK 0
 #define X_OK 1
