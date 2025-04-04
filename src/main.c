@@ -6,7 +6,7 @@
 /*   By: sberete <sberete@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 22:28:02 by sberete           #+#    #+#             */
-/*   Updated: 2025/04/04 20:52:26 by sberete          ###   ########.fr       */
+/*   Updated: 2025/04/04 20:58:16 by sberete          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,26 +70,3 @@ int	main(int argc, char **argv, char **env)
 		waitpid(pid2, &status, 0);
 	}
 }
-// 0 1 2
-// 3 4 -> 0 1 2 3 4
-
-// int	main(int argc, char **argv, char **env)
-// {
-// 	(void)argc;
-// 	(void)argv;
-// 	(void)env;
-// 	int fd = open("outfile", O_CREAT | O_WRONLY);
-// 	dup2(fd, STDOUT_FILENO);
-// 	static char *arg[] = {"ls -l", NULL};
-// 	//printf("%s\n", arg[0]);
-// 	execve("/bin/ls", arg, env);
-// }
-
-// int main(int argc, char **argv)
-// {
-// 	int PversF[2];
-// 	int FversP[2];
-// 	pipe(PversF);
-// 	pipe(FversP);
-
-// }
