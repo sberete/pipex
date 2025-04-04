@@ -3,76 +3,86 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sxrimu <sxrimu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sberete <sberete@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 22:28:02 by sberete           #+#    #+#             */
-/*   Updated: 2025/04/02 22:14:44 by sxrimu           ###   ########.fr       */
+/*   Updated: 2025/04/04 20:52:26 by sberete          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
+#include <stdio.h>
 
 int	main(int argc, char **argv, char **env)
 {
-	int fd[2];
-//	int infile;
-	//int outfile;
-	pid_t pid;
-	
+	int		fd[2];
+	int		infile;
+	int		outfile;
+	char	**path;
+	char	**split_arg;
+	char	*command;
+	pid_t	pid;
+	pid_t	pid2;
+	int		status;
+
+	pid2 = 0;
 	if (argc == 5)
 		pipe_init(argv, env);
 	else
 		return (1);
+	path = search_path(env);
 	pipe(fd);
 	pid = fork();
 	if (pid == -1 || pipe(fd) == -1)
-		return 1;
+		return (1);
 	if (pid == 0)
 	{
-		close(fd[1]);
-	//	infile = open (argv[1], O_CREAT | O_RDONLY);
-	//	dup2(infile, STDIN_FILENO);
-	//	close(infile);
 		close(fd[0]);
-		char *arge[] = {"wc -w", NULL};
-		execve(argv[1], arge, env);
-
+		infile = open(argv[1], O_RDONLY);
+		dup2(infile, STDIN_FILENO);
+		close(infile);
+		dup2(fd[1], STDOUT_FILENO);
+		close(fd[1]);
+		split_arg = ft_split(argv[2], ' ');
+		command = command_exist(path, split_arg[0]);
+		execve(command, split_arg, env);
+		exit(1);
+	}
+	pid2 = fork();
+	if (pid2 == 0)
+	{
+		close(fd[1]);
+		outfile = open(argv[4], O_CREAT | O_WRONLY);
+		dup2(outfile, STDOUT_FILENO);
+		close(outfile);
+		dup2(fd[0], STDIN_FILENO);
+		close(fd[0]);
+		split_arg = ft_split(argv[3], ' ');
+		command = command_exist(path, split_arg[0]);
+		execve(command, split_arg, env);
+		exit(1);
 	}
 	else
 	{
-		close(fd[0]);
-	//	outfile = open(argv[4], O_CREAT | O_WRONLY);
-		//dup2(outfile, STDOUT_FILENO);
-	//	close(fd[1]);
-		char *arg[] = {"ls -l", NULL};
-		execve(argv[2], arg, env);
+		// close(fd[1]);
+		// close(fd[0]);
+		waitpid(pid, &status, 0);
+		waitpid(pid2, &status, 0);
 	}
 }
+// 0 1 2
+// 3 4 -> 0 1 2 3 4
 
-// int	main(int argc, char **argv)
+// int	main(int argc, char **argv, char **env)
 // {
-// 	int fd[2];
-// 	char buf;
-// 	pipe(fd);
 // 	(void)argc;
-
-// 	if (fork() == -1|| pipe(fd) == -1)
-// 		return (0);
-// 	if (fork() == 0)
-// 	{
-// 		close(fd[1]);
-// 		while (read(fd[0], &buf, 1) > 0)
-// 			write(1, &buf, 1);
-// 		ft_printf("Fils\n");
-// 		close(fd[0]);
-// 	}
-// 	else
-// 	{
-// 		close(fd[0]);
-// 		write(fd[1], argv[1], ft_strlen(argv[1]));
-// 		ft_printf("Pere\n");
-// 		close(fd[1]);
-// 	}
+// 	(void)argv;
+// 	(void)env;
+// 	int fd = open("outfile", O_CREAT | O_WRONLY);
+// 	dup2(fd, STDOUT_FILENO);
+// 	static char *arg[] = {"ls -l", NULL};
+// 	//printf("%s\n", arg[0]);
+// 	execve("/bin/ls", arg, env);
 // }
 
 // int main(int argc, char **argv)
