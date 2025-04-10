@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sberete <sberete@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sxrimu <sxrimu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 20:00:44 by sxrimu            #+#    #+#             */
-/*   Updated: 2025/04/04 20:39:20 by sberete          ###   ########.fr       */
+/*   Updated: 2025/04/11 01:20:26 by sxrimu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ char	**search_path(char **env)
 char	*command_exist(char **path, char *split_arg)
 {
 	char	*tmp;
-	char	*s;
+	char *final;
 	int		i;
 
 	i = 0;
@@ -44,33 +44,37 @@ char	*command_exist(char **path, char *split_arg)
 	{
 		tmp = ft_strjoin(path[i], split_arg);
 		if (access(tmp, F_OK) == 0)
+		{
+			final = tmp;
 			break ;
+		}
 		else
-			tmp = NULL;
+			free(tmp);
 		i++;
 	}
-	s = tmp;
-	return (s);
+	return (final);
 }
 
-void	pipe_init(char **argv, char **env)
+int	parsing(int argc, char **argv, char **env)
 {
 	char	**path;
 	char	*tmp;
-	char	*tmp2;
 	char	**split_arg;
-	char	**split_arg2;
-
-	tmp = NULL;
+	int 	i;
+	
 	if (!argv[2][0] || !argv[3][0])
-		exit(1);
+	return 1;
 	path = search_path(env);
-	split_arg = ft_split(argv[2], ' ');
-	split_arg2 = ft_split(argv[3], ' ');
-	if (!(tmp = command_exist(path, split_arg[0]))
-		|| !(tmp2 = command_exist(path, split_arg2[0])))
-		exit(1);
-	//printf("%s, %s\n", tmp, tmp2);
+	split_arg = ft_split(argv[i], ' ');
+	i = 3;
+	while (i < argc - 1)
+	{
+		
+	}
+	
+	if (!(tmp = command_exist(path, split_arg[0])));
+
+	return (0);
 }
 
 // strace -e access

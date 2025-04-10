@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sberete <sberete@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sxrimu <sxrimu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 17:18:28 by sberete           #+#    #+#             */
-/*   Updated: 2025/04/03 19:15:55 by sberete          ###   ########.fr       */
+/*   Updated: 2025/04/11 00:49:28 by sxrimu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,12 @@
 # include <unistd.h>
 
 # define F_OK 0
-# define X_OK 1
-// #define W_OK 3
-# define R_OK 4
 
-void	pipe_init(char **argv, char **env);
+int	parsing(int argc, char **argv, char **env);
 char	**search_path(char **env);
 char	*command_exist(char **path, char *split_arg);
-
+void first_child(char *argv, int *fd);
+void second_child(char *argv, int *fd);
+void parent(pid_t first_child, pid_t second_child, int *fd);
+void exec(char *argv, char **env);
 #endif
