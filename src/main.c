@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sxrimu <sxrimu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sberete <sberete@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 22:28:02 by sberete           #+#    #+#             */
-/*   Updated: 2025/04/11 00:20:53 by sxrimu           ###   ########.fr       */
+/*   Updated: 2025/04/12 01:42:28 by sberete          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,9 @@ int	main(int argc, char **argv, char **env)
 	int		fd[2];
 	pid_t	pid2;
 	pid_t	pid;
+
 	pid2 = 0;
-	if (argc == 5)
+	if (argc == 5 && parsing(argc, argc, env) == 0)
 	{
 		pipe(fd);
 		if (pipe(fd) == -1)
@@ -37,7 +38,7 @@ int	main(int argc, char **argv, char **env)
 		if (pid2 == 0)
 		{
 			second_child(argv[4], fd);
-			exec(argv[3], env);                     
+			exec(argv[3], env);
 			ft_printf("Error with execve\n");
 			exit(1);
 		}
@@ -46,3 +47,5 @@ int	main(int argc, char **argv, char **env)
 	else
 		return (1);
 }
+
+// errno pour les erreurs pas utiliser printf

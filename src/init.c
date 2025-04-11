@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sxrimu <sxrimu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sberete <sberete@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 20:00:44 by sxrimu            #+#    #+#             */
-/*   Updated: 2025/04/11 01:20:26 by sxrimu           ###   ########.fr       */
+/*   Updated: 2025/04/12 01:42:47 by sberete          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,11 @@ char	**search_path(char **env)
 char	*command_exist(char **path, char *split_arg)
 {
 	char	*tmp;
-	char *final;
+	char	*final;
 	int		i;
 
 	i = 0;
+	final = NULL;
 	while (path[i])
 	{
 		tmp = ft_strjoin(path[i], split_arg);
@@ -60,20 +61,32 @@ int	parsing(int argc, char **argv, char **env)
 	char	**path;
 	char	*tmp;
 	char	**split_arg;
-	int 	i;
-	
-	if (!argv[2][0] || !argv[3][0])
-	return 1;
-	path = search_path(env);
-	split_arg = ft_split(argv[i], ' ');
-	i = 3;
-	while (i < argc - 1)
-	{
-		
-	}
-	
-	if (!(tmp = command_exist(path, split_arg[0])));
+	int		i;
+	int		j;
 
+	if (!argv[2][0] || !argv[3][0])
+		return (1);
+	path = search_path(env);
+	j = 3;
+	split_arg = ft_split(argv[j], ' ');
+	while (j < argc)
+	{
+		i = 0;
+		while (argv[j][i])
+		{
+			tmp = command_exist(path, split_arg[0]);
+			if (!tmp)
+			{
+				free_tab(path);
+				free_tab(split_arg);
+				return (1);
+			}
+			i++;
+		}
+		j++;
+	}
+	free_tab(path);
+	free_tab(split_arg);
 	return (0);
 }
 
