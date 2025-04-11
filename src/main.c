@@ -6,7 +6,7 @@
 /*   By: sberete <sberete@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 22:28:02 by sberete           #+#    #+#             */
-/*   Updated: 2025/04/12 01:42:28 by sberete          ###   ########.fr       */
+/*   Updated: 2025/04/12 01:47:35 by sberete          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,5 +47,3 @@ int	main(int argc, char **argv, char **env)
 	else
 		return (1);
 }
-
-// errno pour les erreurs pas utiliser printf
