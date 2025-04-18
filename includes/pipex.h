@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sxrimu <sxrimu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sberete <sberete@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 17:18:28 by sberete           #+#    #+#             */
-/*   Updated: 2025/04/11 00:49:28 by sxrimu           ###   ########.fr       */
+/*   Updated: 2025/04/17 23:03:20 by sberete          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,19 @@
 # include <sys/wait.h>
 # include <unistd.h>
 
-# define F_OK 0
+typedef struct s_command
+{
+	int		fd[2];
+	char	**path;
+	char	**env;
+	int		len;
+	char	*infile;
+	char	*outfile;
+}			t_command;
 
-int	parsing(int argc, char **argv, char **env);
-char	**search_path(char **env);
-char	*command_exist(char **path, char *split_arg);
-void first_child(char *argv, int *fd);
-void second_child(char *argv, int *fd);
-void parent(pid_t first_child, pid_t second_child, int *fd);
-void exec(char *argv, char **env);
+t_command	init(pid_t **pids, char **argv, char **env, int argc);
+char		**search_path(char **env);
+void		dup_2(int new_fd, int old_fd);
+void		children_process(t_command *command, pid_t *pids, char **argv);
+
 #endif

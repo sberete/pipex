@@ -1,27 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init.c                                             :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sberete <sberete@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/16 21:26:07 by sberete           #+#    #+#             */
-/*   Updated: 2025/04/17 21:39:29 by sberete          ###   ########.fr       */
+/*   Created: 2025/04/14 16:39:59 by sberete           #+#    #+#             */
+/*   Updated: 2025/04/17 21:39:11 by sberete          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-t_command	init(pid_t **pids, char **argv, char **env, int argc)
+char	**search_path(char **env)
 {
-	t_command	command;
+	char	**path;
+	char	*tmp;
+	int		i;
 
-	ft_memset(&command, 0, sizeof(t_command));
-	command.env = env;
-	command.path = search_path(env);
-	command.len = argc - 3;
-	*pids = malloc(sizeof(pid_t) * command.len);
-	command.infile = argv[1];
-	command.outfile = argv[argc - 1];
-	return (command);
+	i = 0;
+	tmp = NULL;
+	while (env[i])
+	{
+		if (ft_strncmp(env[i], "PATH=", 5))
+		{
+			tmp = env[i];
+			break ;
+		}
+		i++;
+	}
+	path = ft_split(tmp + 5, ':');
+	return (path);
+}
+
+void	dup_2(int new_fd, int old_fd)
+{
+	dup2(new_fd, old_fd);
+	close(new_fd);
 }
