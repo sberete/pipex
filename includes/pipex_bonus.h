@@ -6,7 +6,7 @@
 /*   By: sberete <sberete@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 21:40:18 by sberete           #+#    #+#             */
-/*   Updated: 2025/04/17 23:04:12 by sberete          ###   ########.fr       */
+/*   Updated: 2025/04/18 22:02:06 by sberete          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,13 @@ typedef struct s_command
 	int		len;
 	char	*infile;
 	char	*outfile;
+	pid_t		*pids;
+
 }			t_command;
 
 char		**search_path(char **env);
-t_command	init(pid_t **pids, char **argv, char **env, int argc);
-void		children_process(t_command *command, pid_t *pids, char **argv);
+t_command	init(char **argv, char **env, int argc);
+void		children_process(t_command *command, char **argv);
 void		dup_2(int new_fd, int old_fd);
 
 #endif
