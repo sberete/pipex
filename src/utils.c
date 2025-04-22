@@ -6,7 +6,7 @@
 /*   By: sberete <sberete@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 16:39:59 by sberete           #+#    #+#             */
-/*   Updated: 2025/04/17 21:39:11 by sberete          ###   ########.fr       */
+/*   Updated: 2025/04/22 00:38:43 by sberete          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,4 +37,13 @@ void	dup_2(int new_fd, int old_fd)
 {
 	dup2(new_fd, old_fd);
 	close(new_fd);
+}
+
+void	free_and_exit(t_command *command, char *str)
+{
+	perror(str);
+	free_tab(command->path);
+	if (command->pids != NULL)
+		free(command->pids);
+	exit(1);
 }

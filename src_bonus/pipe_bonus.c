@@ -6,27 +6,16 @@
 /*   By: sberete <sberete@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 16:36:11 by sberete           #+#    #+#             */
-/*   Updated: 2025/04/19 01:48:22 by sberete          ###   ########.fr       */
+/*   Updated: 2025/04/22 02:54:10 by sberete          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
 
-static void	free_and_exit(t_command *command)
-{
-	int i;
-
-	i = 0;
-	perror("Open failure");
-	free_tab(command->path);
-	free(command->pids);
-	exit(1);
-}
-
 static void	exec(t_command *command, char *argv)
 {
 	char	**cmd;
-	char *path;
+	char	*path;
 	int		i;
 
 	i = 0;
@@ -42,39 +31,8 @@ static void	exec(t_command *command, char *argv)
 		free(path);
 		i++;
 	}
-	perror("Command not found");
-	free_tab(command->path);
 	free_tab(cmd);
-	free(command->pids);
-	exit(1);
-}
-
-int	a(t_command *command)
-{
-	int	read_fd;
-
-	if (command->here_doc == true)
-		read_fd = command->pipe_heredoc[0];
-	else
-	{
-		read_fd = open(command->infile, O_RDONLY);
-		if (read_fd == -1)
-			free_and_exit(command);
-	}
-	return (read_fd);
-}
-
-int	b(t_command *command)
-{
-	int	write_fd;
-
-	if (command->here_doc == true)
-		write_fd = open(command->outfile, O_APPEND | O_WRONLY | O_CREAT, 0644);
-	else
-		write_fd = open(command->outfile, O_WRONLY | O_TRUNC | O_CREAT, 0644);
-	if (write_fd == -1)
-		free_and_exit(command);
-	return (write_fd);
+	free_and_exit(command, "Command not found");
 }
 
 static void	child_process(t_command *command, char *cmd, int prev_read, int i)
@@ -83,18 +41,19 @@ static void	child_process(t_command *command, char *cmd, int prev_read, int i)
 	int	write_fd;
 
 	if (i == 0)
-		read_fd = a(command);
+		read_fd = open_input_fd(command);
 	else
 		read_fd = prev_read;
 	if (i == command->len - 1)
-		write_fd = b(command);
+		write_fd = open_output_fd(command);
 	else
 		write_fd = command->fd[1];
 	dup_2(read_fd, STDIN_FILENO);
 	dup_2(write_fd, STDOUT_FILENO);
 	if (i != command->len - 1)
 		close(command->fd[0]);
-	close(command->fd[1]);
+	if (i != command->len - 1)
+		close(command->fd[1]);
 	exec(command, cmd);
 }
 
@@ -105,7 +64,6 @@ static void	parent_process(t_command *command, int prev_read)
 	i = 0;
 	close(command->fd[0]);
 	close(command->fd[1]);
-
 	while (i < command->len)
 		waitpid(command->pids[i++], NULL, 0);
 	if (prev_read != -1)
@@ -114,7 +72,7 @@ static void	parent_process(t_command *command, int prev_read)
 	free_tab(command->path);
 }
 
-void	children_process(t_command *command, char **argv)
+void	children_process(t_command *command)
 {
 	int	prev_read;
 	int	i;
@@ -125,13 +83,14 @@ void	children_process(t_command *command, char **argv)
 	i = 0;
 	while (i < command->len)
 	{
-		if (i != command->len - 1 && pipe(command->fd) == -1)
+		if (i != command->len - 1 && pipe(command->fd) == -1
+			&& (ft_strncmp(command->argv[1], "here_doc", 8) == false))
 			exit(1);
 		command->pids[i] = fork();
 		if (command->pids[i] == -1)
 			exit(1);
 		if (command->pids[i] == 0)
-			child_process(command, argv[i + j], prev_read, i);
+			child_process(command, command->argv[i + j], prev_read, i);
 		if (prev_read != -1)
 			close(prev_read);
 		if (i != command->len - 1)

@@ -2,11 +2,13 @@ C = cc
 
 CFLAGS = -Werror -Wextra -Wall -MMD -g3 -fPIC
 
-INCLUDES = -Iincludes -I./lib/ft_printf/includes -I./lib/libft/includes -I.lib/get_next_line
+INCLUDES = -Iincludes -I./lib/ft_printf/includes -I./lib/libft/includes -I./lib/get_next_line/includes
 
 LIBPRINTF = lib/ft_printf/lib/libprintf.a
 
 LIBFT = lib/libft/lib/libft.a
+
+GNL = lib/get_next_line/lib/getnextline.a
 
 SRC_DIR = src
 SRC_DIR_BONUS = src_bonus
@@ -37,7 +39,7 @@ bonus: $(NAME_BONUS)
 $(NAME): $(OBJS) $(LIBPRINTF) $(LIBFT)
 			$(CC) $^ -o $@
 
-$(NAME_BONUS): $(OBJS_BONUS) $(LIBPRINTF) $(LIBFT)
+$(NAME_BONUS): $(OBJS_BONUS) $(LIBPRINTF) $(LIBFT) $(GNL)
 			$(CC) $^ -o $@
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
@@ -58,12 +60,16 @@ $(LIBPRINTF):
 $(LIBFT):
 	$(MAKE) -C lib/libft
 
+$(GNL):
+	$(MAKE) -C lib/get_next_line
+
 .PHONY: clean
 clean:
 	rm -rf $(OBJ_DIR)
 	rm -rf $(OBJ_DIR_BONUS)
 	$(MAKE) -C lib/ft_printf clean
 	$(MAKE) -C lib/libft clean
+	$(MAKE) -C lib/get_next_line clean
 
 .PHONY: fclean
 fclean: clean
@@ -71,5 +77,6 @@ fclean: clean
 	rm -rf $(NAME_BONUS)
 	$(MAKE) -C lib/ft_printf fclean
 	$(MAKE) -C lib/libft fclean
+	$(MAKE) -C lib/get_next_line fclean
 
-re: fclean all
+.PHONY: all clean fclean re bonus
