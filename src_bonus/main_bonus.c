@@ -6,7 +6,7 @@
 /*   By: sberete <sberete@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 22:28:02 by sberete           #+#    #+#             */
-/*   Updated: 2025/04/22 00:55:36 by sberete          ###   ########.fr       */
+/*   Updated: 2025/04/22 22:27:06 by sberete          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,12 @@ int	main(int argc, char **argv, char **env)
 	command = init(argv, env, argc);
 	if (argc >= 5)
 	{
-		if (command.here_doc == 1)
+		if (command.here_doc == 1 && argc != 6)
+			error_argument(&command);
+		else if (command.here_doc == 1 && argc == 6)
 			handle_heredoc(&command);
 		children_process(&command);
 	}
 	else
-	{
-		ft_printf("./pipex <file1> <cmd1> <cmd2> <cmd3> ... <cmdn> <file2>\n");
-		ft_printf("./pipex here_doc LIMITEUR <cmd1> <cmd2> <file2>\n");
-		free_and_exit(&command, "Wrong numbers of arguments");
-	}
+		error_argument(&command);
 }

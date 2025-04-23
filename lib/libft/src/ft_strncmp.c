@@ -6,7 +6,7 @@
 /*   By: sberete <sberete@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 18:07:38 by sberete           #+#    #+#             */
-/*   Updated: 2025/04/17 21:28:01 by sberete          ###   ########.fr       */
+/*   Updated: 2025/04/23 03:12:28 by sberete          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ bool	ft_strncmp(const char *s1, const char *s2, size_t n)
 	size_t	i;
 
 	i = 0;
-	if (!s2 || !s1)
+	if (!s1 || !s2)
 		return (false);
 	while ((s1[i] || s2[i]) && i < n)
 	{

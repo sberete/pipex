@@ -6,7 +6,7 @@
 /*   By: sberete <sberete@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 21:40:18 by sberete           #+#    #+#             */
-/*   Updated: 2025/04/22 02:53:48 by sberete          ###   ########.fr       */
+/*   Updated: 2025/04/23 04:19:35 by sberete          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,6 @@ void		ft_close(int fd);
 void		free_and_exit(t_command *command, char *str);
 int			open_input_fd(t_command *command);
 int			open_output_fd(t_command *command);
+void		error_argument(t_command *command);
+
 #endif

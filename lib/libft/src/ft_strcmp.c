@@ -1,27 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sberete <sberete@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/19 22:28:02 by sberete           #+#    #+#             */
-/*   Updated: 2025/04/22 23:02:33 by sberete          ###   ########.fr       */
+/*   Created: 2025/04/23 02:26:08 by sberete           #+#    #+#             */
+/*   Updated: 2025/04/23 04:18:35 by sberete          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "libft.h"
 
-int	main(int argc, char **argv, char **env)
+int	ft_strcmp(char *s1, char *s2)
 {
-	t_command	command;
+	int	i;
 
-	command = init(argv, env, argc);
-	if (argc == 5)
-		children_process(&command);
-	else
+	i = 0;
+	if (!s2)
+		return (1);
+	while (s1[i] && s2[i])
 	{
-		ft_printf("./pipex <file1> <cmd1> <cmd2> <file2>\n");
-		free_and_exit(&command, "Wrong numbers of arguments");
+		if (s1[i] != s2[i])
+			return (1);
+		i++;
 	}
+	return (0);
 }

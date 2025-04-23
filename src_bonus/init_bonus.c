@@ -6,7 +6,7 @@
 /*   By: sberete <sberete@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 20:00:44 by sxrimu            #+#    #+#             */
-/*   Updated: 2025/04/21 19:39:01 by sberete          ###   ########.fr       */
+/*   Updated: 2025/04/23 00:15:22 by sberete          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,16 @@ t_command	init(char **argv, char **env, int argc)
 {
 	t_command	command;
 
+	if (!env || !env[0])
+	{
+		perror("Env doesn't exist !");
+		exit(EXIT_FAILURE);
+	}
 	ft_memset(&command, 0, sizeof(t_command));
 	command.env = env;
 	command.path = search_path(env);
+	if (!command.path)
+		exit(1);
 	if (ft_strncmp(argv[1], "here_doc", 8))
 		command.here_doc = true;
 	else

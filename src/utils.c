@@ -6,7 +6,7 @@
 /*   By: sberete <sberete@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 16:39:59 by sberete           #+#    #+#             */
-/*   Updated: 2025/04/22 00:38:43 by sberete          ###   ########.fr       */
+/*   Updated: 2025/04/22 23:01:13 by sberete          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ char	**search_path(char **env)
 		}
 		i++;
 	}
+	if (tmp == NULL)
+		return (NULL);
 	path = ft_split(tmp + 5, ':');
 	return (path);
 }

@@ -6,7 +6,7 @@
 /*   By: sberete <sberete@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 16:36:11 by sberete           #+#    #+#             */
-/*   Updated: 2025/04/22 02:54:10 by sberete          ###   ########.fr       */
+/*   Updated: 2025/04/22 22:50:07 by sberete          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ static void	child_process(t_command *command, char *cmd, int prev_read, int i)
 		close(command->fd[0]);
 	if (i != command->len - 1)
 		close(command->fd[1]);
+	close(command->pipe_heredoc[0]);
 	exec(command, cmd);
 }
 
@@ -64,12 +65,15 @@ static void	parent_process(t_command *command, int prev_read)
 	i = 0;
 	close(command->fd[0]);
 	close(command->fd[1]);
+	close(command->pipe_heredoc[0]);
 	while (i < command->len)
 		waitpid(command->pids[i++], NULL, 0);
 	if (prev_read != -1)
 		close(prev_read);
-	free(command->pids);
-	free_tab(command->path);
+	if (command->pids != NULL)
+		free(command->pids);
+	if (command->path != NULL)
+		free_tab(command->path);
 }
 
 void	children_process(t_command *command)

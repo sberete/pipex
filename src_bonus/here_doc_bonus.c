@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   heredoc.c                                          :+:      :+:    :+:   */
+/*   here_doc_bonus.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sberete <sberete@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 16:36:27 by sberete           #+#    #+#             */
-/*   Updated: 2025/04/22 00:54:39 by sberete          ###   ########.fr       */
+/*   Updated: 2025/04/23 04:17:41 by sberete          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ void	handle_heredoc(t_command *command)
 	while (1)
 	{
 		line = get_next_line(STDIN_FILENO);
+		if (!line)
+			break ;
 		if (ft_strncmp(line, command->argv[2], len))
 		{
 			free(line);

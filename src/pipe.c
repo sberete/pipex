@@ -6,7 +6,7 @@
 /*   By: sberete <sberete@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 16:36:11 by sberete           #+#    #+#             */
-/*   Updated: 2025/04/22 00:38:35 by sberete          ###   ########.fr       */
+/*   Updated: 2025/04/22 22:19:43 by sberete          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,11 @@ static void	child_process(t_command *command, char *cmd, int prev_read, int i)
 	{
 		read_fd = open(command->infile, O_RDONLY);
 		if (read_fd == -1)
+		{
+			close(command->fd[1]);
+			close(command->fd[0]);
 			free_and_exit(command, "Infile open failure : ");
+		}
 	}
 	else
 		read_fd = prev_read;
@@ -52,7 +56,10 @@ static void	child_process(t_command *command, char *cmd, int prev_read, int i)
 	{
 		write_fd = open(command->outfile, O_WRONLY | O_TRUNC | O_CREAT, 0644);
 		if (write_fd == -1)
+		{
+			close(command->fd[1]);
 			free_and_exit(command, "Outfile open failure : ");
+		}
 	}
 	else
 		write_fd = command->fd[1];
