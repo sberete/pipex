@@ -6,7 +6,7 @@
 /*   By: sberete <sberete@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 16:36:11 by sberete           #+#    #+#             */
-/*   Updated: 2025/04/22 22:19:43 by sberete          ###   ########.fr       */
+/*   Updated: 2025/04/23 19:47:04 by sberete          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,26 +41,11 @@ static void	child_process(t_command *command, char *cmd, int prev_read, int i)
 	int	write_fd;
 
 	if (i == 0)
-	{
-		read_fd = open(command->infile, O_RDONLY);
-		if (read_fd == -1)
-		{
-			close(command->fd[1]);
-			close(command->fd[0]);
-			free_and_exit(command, "Infile open failure : ");
-		}
-	}
+		read_fd = open_input_fd(command);
 	else
 		read_fd = prev_read;
 	if (i == command->len - 1)
-	{
-		write_fd = open(command->outfile, O_WRONLY | O_TRUNC | O_CREAT, 0644);
-		if (write_fd == -1)
-		{
-			close(command->fd[1]);
-			free_and_exit(command, "Outfile open failure : ");
-		}
-	}
+		write_fd = open_output_fd(command);
 	else
 		write_fd = command->fd[1];
 	dup_2(read_fd, STDIN_FILENO);

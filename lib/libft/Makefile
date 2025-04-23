@@ -1,5 +1,5 @@
 #Default Cflags used for compilation
-CFLAGS := -Wall -Wextra -MMD -g3
+CFLAGS := -Wall -Wextra -Werror -MMD -g3
 
 # Directory where are located header files
 INCLUDE_DIR := includes

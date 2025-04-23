@@ -9,7 +9,7 @@ INCLUDES := -I$(INCLUDE_DIR)
 
 OBJ_DIR := objs
 
-SRC_DIR := srcs
+SRC_DIR := src
 
 SRCS := $(shell find $(SRC_DIR) -name '*.c')
 
@@ -20,7 +20,7 @@ DEPEND = $(OBJS:.o=.d)
 LIB_FOLDER := lib
 
 # Library name
-LIB_NAME := libprintf.a
+LIB_NAME := getnextline.a
 
 # Library path
 LIB := $(LIB_FOLDER)/$(LIB_NAME)

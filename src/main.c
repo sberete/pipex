@@ -6,7 +6,7 @@
 /*   By: sberete <sberete@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 22:28:02 by sberete           #+#    #+#             */
-/*   Updated: 2025/04/22 23:02:33 by sberete          ###   ########.fr       */
+/*   Updated: 2025/04/23 22:21:16 by sberete          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,5 @@ int	main(int argc, char **argv, char **env)
 	if (argc == 5)
 		children_process(&command);
 	else
-	{
-		ft_printf("./pipex <file1> <cmd1> <cmd2> <file2>\n");
-		free_and_exit(&command, "Wrong numbers of arguments");
-	}
+		error_argument(&command);
 }

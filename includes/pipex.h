@@ -6,7 +6,7 @@
 /*   By: sberete <sberete@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 17:18:28 by sberete           #+#    #+#             */
-/*   Updated: 2025/04/22 00:38:22 by sberete          ###   ########.fr       */
+/*   Updated: 2025/04/23 22:21:36 by sberete          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,5 +40,8 @@ char		**search_path(char **env);
 void		dup_2(int new_fd, int old_fd);
 void		children_process(t_command *command);
 void		free_and_exit(t_command *command, char *str);
+int			open_input_fd(t_command *command);
+int			open_output_fd(t_command *command);
+void		error_argument(t_command *command);
 
 #endif

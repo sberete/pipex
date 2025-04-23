@@ -6,7 +6,7 @@
 /*   By: sberete <sberete@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 22:28:02 by sberete           #+#    #+#             */
-/*   Updated: 2025/04/22 22:27:06 by sberete          ###   ########.fr       */
+/*   Updated: 2025/04/23 19:53:56 by sberete          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	main(int argc, char **argv, char **env)
 	{
 		if (command.here_doc == 1 && argc != 6)
 			error_argument(&command);
-		else if (command.here_doc == 1 && argc == 6)
+		else if (command.here_doc == 1)
 			handle_heredoc(&command);
 		children_process(&command);
 	}

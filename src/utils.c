@@ -6,7 +6,7 @@
 /*   By: sberete <sberete@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 16:39:59 by sberete           #+#    #+#             */
-/*   Updated: 2025/04/22 23:01:13 by sberete          ###   ########.fr       */
+/*   Updated: 2025/04/23 22:12:03 by sberete          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,5 +47,16 @@ void	free_and_exit(t_command *command, char *str)
 	free_tab(command->path);
 	if (command->pids != NULL)
 		free(command->pids);
+	exit(1);
+}
+
+void	error_argument(t_command *command)
+{
+	if (command->path != NULL)
+		free_tab(command->path);
+	if (command->pids != NULL)
+		free(command->pids);
+	ft_printf("Wrong numbers of arguments\nTry this :\n");
+	ft_printf("./pipex <file1> <cmd1> <cmd2> <file2>\n");
 	exit(1);
 }
