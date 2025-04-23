@@ -6,7 +6,7 @@
 /*   By: sberete <sberete@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 20:00:44 by sxrimu            #+#    #+#             */
-/*   Updated: 2025/04/23 00:15:22 by sberete          ###   ########.fr       */
+/*   Updated: 2025/04/24 01:11:26 by sberete          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_command	init(char **argv, char **env, int argc)
 	command.path = search_path(env);
 	if (!command.path)
 		exit(1);
-	if (ft_strncmp(argv[1], "here_doc", 8))
+	if (ft_strcmp(argv[1], "here_doc") == 0)
 		command.here_doc = true;
 	else
 		command.here_doc = false;

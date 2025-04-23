@@ -79,4 +79,7 @@ fclean: clean
 	$(MAKE) -C lib/libft fclean
 	$(MAKE) -C lib/get_next_line fclean
 
-.PHONY: all clean fclean re bonus
+.PHONY: re
+re: fclean all bonus
+
+.PHONY: all clean fclean re
